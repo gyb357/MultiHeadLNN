@@ -1,0 +1,27 @@
+# Basic run and window settings
+runs: 100
+window_start: 3
+window_end: 5
+
+# Undersampling settings
+bal_train: true
+bal_valid: false
+bal_test: false
+
+# Scaler settings (standard, robust, minmax)
+scaler: 'standard'
+
+# DataLoader settings
+batch_size: 32
+device: 'cpu'  # (cpu, cuda, mps)
+
+# Model settings (ltc, cfc, lstm, gru)
+model: 'cfc'
+hidden_size: 64
+num_classes: 2
+
+# Training settings
+lr: 0.0001
+epochs: 1000
+patience: 100
+threshold: 0.5
