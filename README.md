@@ -94,6 +94,14 @@ cd MultiHeadLNN
 pip install -r requirements.txt
 ```
 
+# 3. Download Dataset
+
+You can download the dataset and related papers here:
+
+```bash
+https://github.com/sowide/bankruptcy_dataset
+```
+
 ### Required Dependencies
 
 | Package | Version | Purpose |
@@ -106,7 +114,7 @@ pip install -r requirements.txt
 | rich | Latest | Progress bars and formatting |
 | pyyaml | Latest | Configuration management |
 
-## 3. Configuration
+## 4. Configuration
 
 Modify the `./config/configs.yaml` file to customize your experiment:
 
@@ -140,7 +148,7 @@ patience: 100
 threshold: 0.5
 ```
 
-## 4. Training the Model
+## 5. Training the Model
 
 ### Data Preparation
 
@@ -170,24 +178,24 @@ Results are automatically saved to:
 ```
 MultiHeadLNN/
 ├── config/                 # Configuration files
-│   └── configs.yaml       # Main configuration file
-├── dataset/               # Dataset directory
-│   ├── {window}_train.csv # Training data for each window
-│   ├── {window}_valid.csv # Validation data for each window
-│   └── {window}_test.csv  # Test data for each window
-├── model/                 # Model architectures and utilities
-│   ├── classifier.py      # Classification head implementation
-│   ├── forward.py         # Forward pass utilities
-│   ├── lnn.py            # Liquid neural network implementations
-│   ├── rnn.py            # Traditional RNN implementations
-│   └── utils.py          # Model utilities
-├── result/               # Results and model checkpoints
-│   ├── best_model.pth    # Best model checkpoint
-│   └── *_results_*.csv   # Experimental results
-├── dataset.py            # Data processing utilities
-├── main.py               # Main training script
-├── plot.py               # Visualization utilities
-├── train.py              # Training and evaluation functions
-├── requirements.txt      # Python dependencies
-└── README.md            # This file
+│   └── configs.yaml        # Main configuration file
+├── dataset/                # Dataset directory
+│   ├── {window}_train.csv  # Training data for each window
+│   ├── {window}_valid.csv  # Validation data for each window
+│   └── {window}_test.csv   # Test data for each window
+├── model/                  # Model architectures and utilities
+│   ├── classifier.py       # Classification head implementation
+│   ├── forward.py          # Forward pass utilities
+│   ├── lnn.py              # Liquid neural network implementations
+│   ├── rnn.py              # Traditional RNN implementations
+│   └── utils.py            # Model utilities
+├── result/                 # Results and model checkpoints
+│   ├── best_model.pth      # Best model checkpoint
+│   └── *_results_*.csv     # Experimental results
+├── dataset.py              # Data processing utilities
+├── main.py                 # Main training script
+├── plot.py                 # Visualization utilities
+├── train.py                # Training and evaluation functions
+├── requirements.txt        # Python dependencies
+└── README.md               # This file
 ```
