@@ -96,15 +96,7 @@ https://github.com/sowide/bankruptcy_dataset
 
 ### Required Dependencies
 
-| Package | Version | Purpose |
-|---------|---------|---------|
-| torch | Latest | Deep learning framework |
-| pandas | Latest | Data manipulation |
-| matplotlib | Latest | Visualization |
-| scikit-learn | Latest | Machine learning utilities |
-| ncps | Latest | Neural Circuit Policies |
-| rich | Latest | Progress bars and formatting |
-| pyyaml | Latest | Configuration management |
+torch, pandas, matplotlib, scikit-learn, ncps, rich, pyyaml
 
 ## 4. Configuration
 
