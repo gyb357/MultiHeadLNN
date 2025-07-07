@@ -53,12 +53,16 @@ The core innovation of this project is the multi-head architecture that processe
 
 ## Model Parameters
 
+<div align="center">
+
 | Model Type | Window Size | Hidden Size | Parameters |
 |------------|-------------|-------------|------------|
 | LTC        | 3, 4, 5     | 64          | 4948, 6766, 8728 |
 | CfC        | 3, 4, 5     | 64          | 43162, 55906, 68650 |
 | LSTM       | 3, 4, 5     | 64          | 5074, 6946, 8962 |
 | GRU        | 3, 4, 5     | 64          | 4750, 6442, 8242 |
+
+</div>
 
 ---
 
@@ -67,9 +71,7 @@ The core innovation of this project is the multi-head architecture that processe
 ## 1. Check the Running Environment
 
 Before proceeding, ensure that your system has the required dependencies. The project supports:
-- **CPU**: Standard CPU training
-- **CUDA**: GPU acceleration with CUDA
-- **MPS**: Apple Silicon GPU acceleration
+- CPU, CUDA, MPS
 
 Check your PyTorch installation:
 ```bash
@@ -97,6 +99,10 @@ You can download the dataset and related papers here:
 ```bash
 https://github.com/sowide/multi-head_LSTM_for_bankruptcy-prediction
 ```
+
+ > [!Note]
+ > We've referenced code from that GitHub.
+ > The existing tensorflow code has been replaced with torch and supports GRU and liquid neural network models as well as LSTM.
 
  > [!IMPORTANT]
  > The dataset is under a CC-BY-4.0 license.
