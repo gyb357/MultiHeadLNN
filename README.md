@@ -98,6 +98,7 @@ You can download the dataset and related papers here:
 
 ```bash
 https://github.com/sowide/multi-head_LSTM_for_bankruptcy-prediction
+https://github.com/sowide/bankruptcy_dataset
 ```
 
  > [!Note]
