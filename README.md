@@ -6,8 +6,9 @@
 4. [Getting Started](#getting-started)
    * [Check the Running Environment](#1-check-the-running-environment)
    * [Installation and Dependencies](#2-installation-and-dependencies)
-   * [Configuration](#3-configuration)
-   * [Training the Model](#4-training-the-model)
+   * [Download Datasets](#3-download-datasets)
+   * [Configuration](#4-configuration)
+   * [Training the Model](#5-training-the-model)
 5. [Project Structure](#project-structure)
 
 ---
@@ -85,7 +86,7 @@ cd MultiHeadLNN
 pip install -r requirements.txt
 ```
 
-# 3. Download Datasets
+## 3. Download Datasets
 
 You can download the dataset and related papers here:
 
