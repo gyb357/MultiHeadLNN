@@ -86,6 +86,10 @@ cd MultiHeadLNN
 pip install -r requirements.txt
 ```
 
+### Required Dependencies
+
+torch, pandas, matplotlib, scikit-learn, ncps, rich, pyyaml
+
 ## 3. Download Datasets
 
 You can download the dataset and related papers here:
@@ -93,10 +97,6 @@ You can download the dataset and related papers here:
 ```bash
 https://github.com/sowide/bankruptcy_dataset
 ```
-
-### Required Dependencies
-
-torch, pandas, matplotlib, scikit-learn, ncps, rich, pyyaml
 
 ## 4. Configuration
 
