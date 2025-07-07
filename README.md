@@ -95,8 +95,13 @@ torch, pandas, matplotlib, scikit-learn, ncps, rich, pyyaml
 You can download the dataset and related papers here:
 
 ```bash
-https://github.com/sowide/bankruptcy_dataset
+https://github.com/sowide/multi-head_LSTM_for_bankruptcy-prediction
 ```
+
+ > [!IMPORTANT]
+ > The dataset is under a CC-BY-4.0 license.
+ > Please refer to the readme.md on the corresponding GitHub.
+
 
 ## 4. Configuration
 
