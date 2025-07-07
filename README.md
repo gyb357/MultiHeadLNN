@@ -26,33 +26,24 @@ The implementation supports different data preprocessing techniques, undersampli
 
 ## Multi-Head Architecture
 
-The core innovation of this project is the multi-head architecture that processes each financial variable independently through separate neural network cells before combining the outputs for final classification. This approach allows the model to:
-
-- **Capture variable-specific patterns**: Each financial variable is processed by its own neural network cell
-- **Maintain temporal dependencies**: Sequential processing of time series data
-- **Handle multiple variables efficiently**: Parallel processing of different financial indicators
-- **Improve interpretability**: Separate processing paths for each variable
-
-## Supported Models
+The core innovation of this project is the multi-head architecture that processes each financial variable independently through separate neural network cells before combining the outputs for final classification. 
 
 ### 1. Liquid Time-Constant Networks (LTC)
 - **Purpose**: Continuous-time neural networks with liquid time constants
-- **Advantages**: Better handling of irregular time series and continuous dynamics
 - **Implementation**: Uses the `ncps` library for LTC implementation
+- **Paper**: https://arxiv.org/pdf/2006.04439
 
 ### 2. Closed-form Continuous-time Networks (CfC)
 - **Purpose**: Efficient continuous-time neural networks with closed-form solutions
-- **Advantages**: Faster training and inference compared to traditional RNNs
 - **Implementation**: Uses the `ncps` library with tanh activation
+- **Paper**: https://arxiv.org/pdf/2106.13898
 
 ### 3. Long Short-Term Memory (LSTM)
 - **Purpose**: Traditional recurrent neural network with memory cells
-- **Advantages**: Proven effectiveness for sequential data
 - **Implementation**: PyTorch's built-in LSTM with custom weight initialization
 
 ### 4. Gated Recurrent Unit (GRU)
 - **Purpose**: Simplified recurrent neural network with gating mechanisms
-- **Advantages**: Fewer parameters than LSTM while maintaining performance
 - **Implementation**: PyTorch's built-in GRU with custom weight initialization
 
 ---
@@ -94,7 +85,7 @@ cd MultiHeadLNN
 pip install -r requirements.txt
 ```
 
-# 3. Download Dataset
+# 3. Download Datasets
 
 You can download the dataset and related papers here:
 
