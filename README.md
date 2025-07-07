@@ -80,7 +80,7 @@ python -c "import torch; print(torch.__version__); print('CUDA available:', torc
 Clone the repository and install dependencies:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/gyb357/MultiHeadLNN
 cd MultiHeadLNN
 pip install -r requirements.txt
 ```
