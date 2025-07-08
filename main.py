@@ -181,7 +181,7 @@ if __name__ == '__main__':
                 'pr_healthy': [metrics[14]],
                 'train_time': [train_time],
             })
-            out_path = f"result/{MODEL.__name__}_results_{SCALER.__class__.__name__}.csv"
+            out_path = f"result/{MODEL.__name__}_results_{SCALER.__class__.__name__}_{THRESHOLD}.csv"
             if not os.path.exists('result'):
                 os.makedirs('result')
 
