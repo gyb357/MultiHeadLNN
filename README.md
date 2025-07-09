@@ -11,17 +11,19 @@
    * [Training the Model](#5-training-the-model)
 5. [Project Structure](#project-structure)
 
----
+
+*****
+
 
 # 📑Introduction
 
 ## Multi-Head Neural Networks for Financial Time Series Classification
 
-This repository implements multiple multi-head neural network architectures for financial time series classification, specifically focused on bankruptcy prediction. The project leverages various recurrent neural network architectures including Liquid Time-Constant Networks (LTC), Closed-form Continuous-time Networks (CfC), LSTM, and GRU, all designed with a multi-head approach to handle multiple financial variables simultaneously.
+This repository implements multi-head architectures for financial time series classification for bankruptcy prediction. It employs recurrent models—LTC, CfC, LSTM, and GRU—in a multi-head architecture to process multiple financial indicators concurrently. The code supports various preprocessing techniques, undersampling methods against class imbalance, and comprehensive evaluation metrics.
 
-The implementation supports different data preprocessing techniques, undersampling strategies for imbalanced datasets, and comprehensive evaluation metrics for financial classification tasks.
 
----
+*****
+
 
 # 🔍Architecture Overview
 
@@ -29,27 +31,29 @@ The implementation supports different data preprocessing techniques, undersampli
 
 <img src="assets/architecture.png">
 
-The core innovation of this project is the multi-head architecture that processes each financial variable independently through separate neural network cells before combining the outputs for final classification. 
+The core innovation is a multi-head design that processes each financial variable in its own network branch and then aggregates their outputs for final classification.
+
+ > [!Note]
+ > images and the papers are [here](https://www.mdpi.com/1999-5903/16/3/79)
+
 
 ### 1. Liquid Time-Constant Networks (LTC)
-- **Purpose**: Continuous-time neural networks with liquid time constants
-- **Implementation**: Uses the `ncps` library for LTC implementation
+Continuous-time recurrent neural network with liquid time constants. Uses the [ncps](https://github.com/mlech26l/ncps) library for LTC implementation
 - **Paper**: https://arxiv.org/pdf/2006.04439
 
 ### 2. Closed-form Continuous-time Networks (CfC)
-- **Purpose**: Efficient continuous-time neural networks with closed-form solutions
-- **Implementation**: Uses the `ncps` library with tanh activation
+Efficient continuous-time neural networks with closed-form solutions. Uses the [ncps](https://github.com/mlech26l/ncps) library with tanh activation
 - **Paper**: https://arxiv.org/pdf/2106.13898
 
 ### 3. Long Short-Term Memory (LSTM)
-- **Purpose**: Traditional recurrent neural network with memory cells
-- **Implementation**: PyTorch's built-in LSTM with custom weight initialization
+Traditional recurrent neural network with memory cells
 
 ### 4. Gated Recurrent Unit (GRU)
-- **Purpose**: Simplified recurrent neural network with gating mechanisms
-- **Implementation**: PyTorch's built-in GRU with custom weight initialization
+Simplified recurrent neural network with gating mechanisms
 
----
+
+*****
+
 
 # 📋Model Comparison
 
@@ -57,16 +61,18 @@ The core innovation of this project is the multi-head architecture that processe
 
 <div align="center">
 
-| Model Type | Window Size | Hidden Size | Parameters |
-|------------|-------------|-------------|------------|
-| LTC        | 3, 4, 5     | 64          | 4948, 6766, 8728 |
-| CfC        | 3, 4, 5     | 64          | 43162, 55906, 68650 |
-| LSTM       | 3, 4, 5     | 64          | 5074, 6946, 8962 |
-| GRU        | 3, 4, 5     | 64          | 4750, 6442, 8242 |
+| Model Type | Window Size | Hidden Size (Classifier) | Parameters |
+|------------|-------------|--------------------------|------------|
+| LTC        | 3, 4, 5     | 64                       | 4948, 6766, 8728 |
+| CfC        | 3, 4, 5     | 64                       | 43162, 55906, 68650 |
+| LSTM       | 3, 4, 5     | 64                       | 5074, 6946, 8962 |
+| GRU        | 3, 4, 5     | 64                       | 4750, 6442, 8242 |
 
 </div>
 
----
+
+*****
+
 
 # 🔨Getting Started
 
@@ -101,47 +107,11 @@ https://github.com/sowide/bankruptcy_dataset
 ```
 
  > [!Note]
- > We've referenced code from that GitHub.
- > The existing tensorflow code has been replaced with torch and supports GRU and liquid neural network models as well as LSTM.
-
- > [!IMPORTANT]
- > The dataset is under a CC-BY-4.0 license.
- > Please refer to the readme.md on the corresponding GitHub.
-
+ > The dataset is under a CC-BY-4.0 license. Please refer to the readme.md on the corresponding GitHub.
 
 ## 4. Configuration
 
-Modify the `./config/configs.yaml` file to customize your experiment:
-
-```yaml
-# Basic run and window settings
-runs: 100                   # Number of experimental runs
-window_start: 3             # Minimum window size
-window_end: 5               # Maximum window size
-
-# Undersampling settings
-bal_train: true             # Balance training data
-bal_valid: false            # Balance validation data
-bal_test: false             # Balance test data
-
-# Scaler settings (standard, robust, minmax)
-scaler: 'standard'
-
-# DataLoader settings
-batch_size: 32
-device: 'cpu'               # (cpu, cuda, mps)
-
-# Model settings (ltc, cfc, lstm, gru)
-model: 'cfc'
-hidden_size: 64
-num_classes: 2
-
-# Training settings
-lr: 0.0001
-epochs: 1000
-patience: 100
-threshold: 0.5
-```
+Modify the `./config/configs.yaml` file to customize your experiment.
 
 ## 5. Training the Model
 
@@ -166,7 +136,13 @@ Results are automatically saved to:
 - `result/{ModelName}_results_{ScalerName}.csv`
 - `result/best_model.pth` (best model checkpoint)
 
----
+```bash
+python plot.py
+```
+
+
+*****
+
 
 # 📁Project Structure
 
@@ -194,3 +170,4 @@ MultiHeadLNN/
 ├── requirements.txt        # Python dependencies
 └── README.md               # This file
 ```
+
