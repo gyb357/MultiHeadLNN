@@ -1,7 +1,4 @@
-import torch.nn as nn
-import torch
-from typing import List
-from torch import Tensor
+from model import *
 
 
 def cell(x: List[Tensor], cell: nn.ModuleList, fc: nn.Sequential) -> Tensor:

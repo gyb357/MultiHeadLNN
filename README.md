@@ -137,9 +137,10 @@ python main.py
 ### Results
 
 Results are automatically saved to:
-- `result/{ModelName}_results_{ScalerName}.csv`
+- `result/{ModelName}_results_{ScalerName}_{Threshold}.csv`
 - `result/best_model.pth` (best model checkpoint)
 
+To show the plots, run:
 ```bash
 python plot.py
 ```
