@@ -84,6 +84,7 @@ if __name__ == '__main__':
 
             # Extract variables
             variables = x_train.columns.tolist()
+            print(f"num_variables: {len(variables)}")
 
             # Scale the data
             x_train_scaled = SCALER.fit_transform(x_train.values)

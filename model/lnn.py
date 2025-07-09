@@ -1,4 +1,9 @@
-from model import *
+import torch.nn as nn
+from ncps.torch import LTC, CfC
+from model.classifier import Classifier
+from typing import List
+from torch import Tensor
+from model.forward import cell
 
 
 class MultiHeadLTC(nn.Module):

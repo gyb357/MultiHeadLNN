@@ -1,4 +1,8 @@
-from model import *
+import torch.nn as nn
+from model.classifier import Classifier
+from typing import List
+from torch import Tensor
+from model.forward import cell
 
 
 def init_weights(module: nn.Module) -> None:

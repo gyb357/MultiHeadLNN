@@ -68,7 +68,7 @@ nrows = math.ceil(len(METRICS) / ncols)
 fig, axes = plt.subplots(
     nrows=nrows,
     ncols=ncols,
-    figsize=(4*ncols, 5*nrows),
+    figsize=(6*ncols, 4*nrows),
     constrained_layout=False
 )
 fig.suptitle(f'Model Comparison on Window={WINDOW} Across Metrics', fontsize=14)

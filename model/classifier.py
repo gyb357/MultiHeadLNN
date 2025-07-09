@@ -1,4 +1,6 @@
-from model import *
+import torch.nn as nn
+from typing import Type
+from torch import Tensor
 
 
 class Classifier(nn.Module):
