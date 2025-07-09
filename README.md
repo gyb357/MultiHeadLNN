@@ -61,12 +61,16 @@ Simplified recurrent neural network with gating mechanisms
 
 <div align="center">
 
-| Model Type | Window Size | Hidden Size (Classifier) | Parameters |
-|:----------:|:-----------:|:------------------------:|:------------------------:|
-| LTC        | 3, 4, 5     | 64                       | 4948, 6766, 8728 |
-| CfC        | 3, 4, 5     | 64                       | 43162, 55906, 68650 |
-| LSTM       | 3, 4, 5     | 64                       | 5074, 6946, 8962 |
-| GRU        | 3, 4, 5     | 64                       | 4750, 6442, 8242 |
+| Model Type | Window Size | Total Parameters |
+|:----------:|:-----------:|:----------------:|
+| LTC        | 3, 4, 5     | 1170, 1836, 2646 |
+| CfC        | 3, 4, 5     | 39384, 50976, 62568 |
+| LSTM       | 3, 4, 5     | 1296, 2016, 2880 |
+| GRU        | 3, 4, 5     | 972, 1512, 2160 |
+
+| Model Type | Window Size | Total Parameters |
+|:----------:|:-----------:|:----------------:|
+| Classifier | 3, 4, 5     | 3778, 4930, 6082 |
 
 </div>
 
