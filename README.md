@@ -70,9 +70,6 @@ The core innovation of this project is the multi-head architecture that processe
 
 ## 1. Check the Running Environment
 
-Before proceeding, ensure that your system has the required dependencies. The project supports:
-- CPU, CUDA, MPS
-
 Check your PyTorch installation:
 ```bash
 python -c "import torch; print(torch.__version__); print('CUDA available:', torch.cuda.is_available())"
