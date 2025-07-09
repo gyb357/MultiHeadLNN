@@ -27,6 +27,8 @@ The implementation supports different data preprocessing techniques, undersampli
 
 ## Multi-Head Architecture
 
+<img src="assets/architecture.png">
+
 The core innovation of this project is the multi-head architecture that processes each financial variable independently through separate neural network cells before combining the outputs for final classification. 
 
 ### 1. Liquid Time-Constant Networks (LTC)
