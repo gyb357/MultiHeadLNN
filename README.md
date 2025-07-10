@@ -14,7 +14,7 @@
 ---
 
 
-# 📑 Introduction {#introduction}
+# 📑 Introduction
 
 ## Multi-Head Neural Networks for Financial Time Series Classification
 
@@ -24,7 +24,7 @@ This repository implements a multi-head architecture for bankruptcy prediction o
 ---
 
 
-# 🔍 Architecture Overview {#architecture-overview}
+# 🔍 Architecture Overview
 
 ## Multi-Head Architecture
 
@@ -64,7 +64,7 @@ Simplified recurrent network with gating mechanisms.
 ---
 
 
-# 📋 Model Comparison {#model-comparison}
+# 📋 Model Comparison
 
 ## Model Parameters
 
@@ -80,7 +80,7 @@ Simplified recurrent network with gating mechanisms.
 ---
 
 
-# 🔨 Getting Started {#getting-started}
+# 🔨 Getting Started
 
 ## 1. Check the Running Environment {#1-check-the-running-environment}
 
