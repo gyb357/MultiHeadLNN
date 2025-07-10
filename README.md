@@ -1,14 +1,14 @@
 # Table of Contents
 
-1. [Introduction](#introduction)
-2. [Architecture Overview](#architecture-overview)
-3. [Model Comparison](#model-comparison)
-4. [Getting Started](#getting-started)
-   * 1. Check the Running Environment
-   * 2. Installation and Dependencies
-   * 3. Download Datasets
-   * 4. Configuration
-   * 5. Training the Model
+1. [Introduction](#Introduction)
+2. [Architecture Overview](#Architecture-Overview)
+3. [Model Comparison](#Model-Comparison)
+4. [Getting Started](#Getting-Started)
+   * Check the Running Environment
+   * Installation and Dependencies
+   * Download Datasets
+   * Configuration
+   * Training the Model
 
 
 ---
