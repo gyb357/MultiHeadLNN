@@ -58,6 +58,8 @@ Simplified recurrent network with gating mechanisms.
 
 # 📋Model Comparison
 
+<div align="center">
+
 ## Model Parameters
 
 | Model Type | Window Size |    Total Parameters    |
@@ -67,6 +69,9 @@ Simplified recurrent network with gating mechanisms.
 |    LSTM    |   3, 4, 5   |   1,296; 2,016; 2,880  |
 |     GRU    |   3, 4, 5   |    972; 1,512; 2,160   |
 | Classifier |   3, 4, 5   |   3,778; 4,930; 6,082  |
+
+
+</div>
 
 
 ---
