@@ -40,28 +40,20 @@ Continuous-time recurrent network with liquid time constants. Uses the [ncps](ht
 
 * **Paper:** [https://arxiv.org/pdf/2006.04439](https://arxiv.org/pdf/2006.04439)
 
----
-
 ### 2. Closed-form Continuous-time Networks (CfC)
 
 Efficient continuous-time networks with closed-form solutions. Uses the [ncps](https://github.com/mlech26l/ncps) library with tanh activation.
 
 * **Paper:** [https://arxiv.org/pdf/2106.13898](https://arxiv.org/pdf/2106.13898)
 
----
-
 ### 3. Long Short-Term Memory (LSTM)
 
 Traditional recurrent network with memory cells.
-
----
 
 ### 4. Gated Recurrent Unit (GRU)
 
 Simplified recurrent network with gating mechanisms.
 
-
----
 
 
 # 📋Model Comparison
