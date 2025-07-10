@@ -32,7 +32,7 @@ This repository implements a multi-head architecture for bankruptcy prediction o
 
 The architecture employs a multi-head design where each financial variable is processed through its own dedicated network branch, with outputs subsequently combined for final classification.
 
-> **Note:** Images and papers are [here](https://www.mdpi.com/1999-5903/16/3/79).
+> **Note:** Papers are [here](https://www.mdpi.com/1999-5903/16/3/79).
 
 ### 1. Liquid Time-Constant Networks (LTC)
 
