@@ -82,7 +82,7 @@ Simplified recurrent network with gating mechanisms.
 
 # 🔨 Getting Started
 
-## 1. Check the Running Environment {#1-check-the-running-environment}
+## 1. Check the Running Environment
 
 Verify your PyTorch installation:
 
@@ -90,7 +90,7 @@ Verify your PyTorch installation:
 python -c "import torch; print(torch.__version__); print('CUDA available:', torch.cuda.is_available())"
 ```
 
-## 2. Installation and Dependencies {#2-installation-and-dependencies}
+## 2. Installation and Dependencies
 
 Clone the repository and install dependencies:
 
@@ -110,7 +110,7 @@ pip install -r requirements.txt
 * rich
 * pyyaml
 
-## 3. Download Datasets {#3-download-datasets}
+## 3. Download Datasets
 
 ```bash
 https://github.com/sowide/multi-head_LSTM_for_bankruptcy-prediction
@@ -119,11 +119,11 @@ https://github.com/sowide/bankruptcy_dataset
 
 > **Note:** The dataset is under a CC-BY-4.0 license. Please refer to each repository's README.
 
-## 4. Configuration {#4-configuration}
+## 4. Configuration
 
 Modify `./config/configs.yaml` to customize your experiment.
 
-## 5. Training the Model {#5-training-the-model}
+## 5. Training the Model
 
 ### Data Preparation
 
