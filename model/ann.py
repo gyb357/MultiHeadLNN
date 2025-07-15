@@ -25,7 +25,6 @@ class ANN(nn.Module):
         flatten: list = []
 
         for v in x:
-            v = v.squeeze(-1)
             flatten.append(v.flatten(start_dim=1))
 
         concat = torch.cat(flatten, dim=1)
