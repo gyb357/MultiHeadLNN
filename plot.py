@@ -3,11 +3,16 @@ import numpy as np
 import matplotlib.colors as mcolors
 import math
 import matplotlib.pyplot as plt
+from yaml import safe_load
 from pathlib import Path
 
 
+with open('config/configs.yaml', 'r') as file:
+    config = safe_load(file)
+
+
 # Constants
-WINDOW = 5
+WINDOW = config['window']
 COLUMNS = [
     'run', 'window',
     'tp', 'tn', 'fp', 'fn',
@@ -22,7 +27,7 @@ METRICS = COLUMNS[2:]
 
 
 # Load CSV data
-csv_files = list(Path('result').glob('*.csv'))
+csv_files = list(Path('result/').glob('*.csv'))
 if not csv_files:
     raise FileNotFoundError("No CSV files found in the 'result' directory.")
 

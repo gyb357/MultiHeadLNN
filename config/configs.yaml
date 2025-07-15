@@ -9,14 +9,14 @@ bal_valid: false
 bal_test: false
 
 # Scaler settings (standard, robust, minmax)
-scaler: 'standard'
+scaler: 'robust'
 
 # DataLoader settings
 batch_size: 32
 device: 'cpu'  # (cpu, cuda, mps)
 
-# Model settings (ltc, cfc, lstm, gru)
-model: 'cfc'
+# Model settings
+model: 'ann' # (ann, ltc, cfc, lstm, gru)
 hidden_size: 64
 num_classes: 2
 
@@ -25,3 +25,6 @@ lr: 0.0001
 epochs: 1000
 patience: 100
 threshold: 0.50
+
+# Plot
+window: 5 # (3, 4, 5)

@@ -3,7 +3,7 @@ from ncps.torch import LTC, CfC
 from model.classifier import Classifier
 from typing import List
 from torch import Tensor
-from model.forward import cell
+from model.utils import forward
 
 
 class MultiHeadLTC(nn.Module):
@@ -15,14 +15,12 @@ class MultiHeadLTC(nn.Module):
             num_classes: int
     ) -> None:
         super(MultiHeadLTC, self).__init__()
-        # Attributes
-        self.hidden_size = hidden_size
-
-        # Liquid Time Constant Neural Networks (LTC)
+        # Liquid time-constant networks (LTC)
         self.cell = nn.ModuleList([
             LTC(
                 input_size=1,
-                units=window_size
+                units=window_size,
+                batch_first=True
             )
             for _ in range(num_variables)
         ])
@@ -35,7 +33,7 @@ class MultiHeadLTC(nn.Module):
         )
 
     def forward(self, x: List[Tensor]) -> Tensor:
-        return cell(x, self.cell, self.fc)
+        return forward(x, self.cell, self.fc)
 
 
 class MultiHeadCfC(nn.Module):
@@ -47,15 +45,12 @@ class MultiHeadCfC(nn.Module):
             num_classes: int
     ) -> None:
         super(MultiHeadCfC, self).__init__()
-        # Attributes
-        self.hidden_size = hidden_size
-
-        # Closed-form Continuous-time Neural Networks (CfC)
+        # Closed-form continuous-time neural networks (CfC)
         self.cell = nn.ModuleList([
             CfC(
                 input_size=1,
                 units=window_size,
-                activation='tanh',
+                batch_first=True
             )
             for _ in range(num_variables)
         ])
@@ -68,5 +63,5 @@ class MultiHeadCfC(nn.Module):
         )
 
     def forward(self, x: List[Tensor]) -> Tensor:
-        return cell(x, self.cell, self.fc)
+        return forward(x, self.cell, self.fc)
 

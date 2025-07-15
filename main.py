@@ -3,6 +3,7 @@ import torch
 import os
 from yaml import safe_load
 from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler
+from model.ann import ANN
 from model.lnn import MultiHeadLTC, MultiHeadCfC
 from model.rnn import MultiHeadLSTM, MultiHeadGRU
 from dataset import (
@@ -45,6 +46,7 @@ DEVICE = config['device']
 
 # Model settings
 _models = {
+    'ann': ANN,
     'ltc': MultiHeadLTC,
     'cfc': MultiHeadCfC,
     'lstm': MultiHeadLSTM,

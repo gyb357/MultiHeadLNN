@@ -2,7 +2,7 @@ import torch.nn as nn
 from model.classifier import Classifier
 from typing import List
 from torch import Tensor
-from model.forward import cell
+from model.utils import forward
 
 
 def init_weights(module: nn.Module) -> None:
@@ -49,7 +49,7 @@ class MultiHeadLSTM(nn.Module):
         self.apply(init_weights)
 
     def forward(self, x: List[Tensor]) -> Tensor:
-        return cell(x, self.cell, self.fc)
+        return forward(x, self.cell, self.fc)
 
 
 class MultiHeadGRU(nn.Module):
@@ -85,5 +85,5 @@ class MultiHeadGRU(nn.Module):
         self.apply(init_weights)
 
     def forward(self, x: List[Tensor]) -> Tensor:
-        return cell(x, self.cell, self.fc)
+        return forward(x, self.cell, self.fc)
 
