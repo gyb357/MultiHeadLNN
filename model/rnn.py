@@ -30,20 +30,17 @@ class MultiHeadLSTM(nn.Module):
 
         # LSTM
         self.cell = nn.ModuleList([
-            nn.LSTM(
-                input_size=1,
-                hidden_size=window_size,
-                batch_first=True
+            nn.LSTM(input_size=1,
+                    hidden_size=window_size,
+                    batch_first=True
             )
             for _ in range(num_variables)
         ])
 
         # Classifier
-        self.fc = Classifier(
-            input_size=window_size * num_variables,
-            hidden_size=hidden_size,
-            num_classes=num_classes
-        )
+        self.fc = Classifier(input_size=window_size * num_variables,
+                             hidden_size=hidden_size,
+                             num_classes=num_classes)
 
         # Initialize weights
         self.apply(init_weights)
@@ -66,20 +63,17 @@ class MultiHeadGRU(nn.Module):
 
         # GRU
         self.cell = nn.ModuleList([
-            nn.GRU(
-                input_size=1,
-                hidden_size=window_size,
-                batch_first=True
+            nn.GRU(input_size=1,
+                   hidden_size=window_size,
+                   batch_first=True
             )
             for _ in range(num_variables)
         ])
 
         # Classifier
-        self.fc = Classifier(
-            input_size=window_size * num_variables,
-            hidden_size=hidden_size,
-            num_classes=num_classes
-        )
+        self.fc = Classifier(input_size=window_size * num_variables,
+                             hidden_size=hidden_size,
+                             num_classes=num_classes)
 
         # Initialize weights
         self.apply(init_weights)

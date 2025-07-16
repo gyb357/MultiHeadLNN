@@ -8,6 +8,7 @@ from torch.utils.data import DataLoader
 from torch import device
 from typing import List, Tuple
 from rich.progress import Progress, TextColumn, BarColumn, TimeElapsedColumn
+from train.utils import save_results
 from sklearn.metrics import (
     accuracy_score,
     roc_auc_score,
@@ -25,7 +26,10 @@ def fit(
         lr: float,
         epochs: int,
         patience: int,
-        threshold: float
+        threshold: float,
+        run: int,
+        window: int,
+        csv_path: str
 ) -> float:
     # Compute class weights for imbalanced datasets
     labels: List[int] = []
@@ -44,8 +48,9 @@ def fit(
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=patience // 2)
 
     # Variables
-    prev_metric: float = 0.0
-    best_metric: float = 0.0
+    task_auc: float = 0.0
+    best_auc: float = 0.0
+    best_metrics: Tuple[float] = ()
     wait: int = 0
     times: List[float] = []
 
@@ -65,7 +70,7 @@ def fit(
                 task,
                 total=len(train_loader),
                 completed=0,
-                description=f"Epoch {epoch}/{epochs} • AUC: {prev_metric:.4f}"
+                description=f"Epoch {epoch}/{epochs} • AUC: {task_auc:.4f}"
             )
 
             model.train()
@@ -100,39 +105,46 @@ def fit(
             times.append(end_time - start_time)
 
             # Validation
-            valid_auc = eval(model, valid_loader, device, threshold)[1]
+            valid_metrics = eval(model, valid_loader, device, threshold)
+            valid_auc = valid_metrics[1]
 
             # Log the results
-            prev_metric = valid_auc
+            task_auc = valid_auc
             progress.update(
                 task,
-                description=f"Epoch {epoch}/{epochs} • AUC: {prev_metric:.4f}"
+                description=f"Epoch {epoch}/{epochs} • AUC: {task_auc:.4f}"
             )
 
             # Step the scheduler
             scheduler.step(valid_auc)
 
             # Early stopping check
-            if valid_auc > best_metric:
-                best_metric = valid_auc
+            if valid_auc > best_auc:
+                best_auc = valid_auc
+                best_metrics = valid_metrics
                 wait = 0
 
                 # Save the best model
                 if not os.path.exists('result'):
                     os.makedirs('result', exist_ok=True)
 
-                torch.save(
-                    {
-                        'model': model.state_dict(),
-                        'optimizer': optimizer.state_dict(),
-                        'scheduler': scheduler.state_dict(),
-                        'epoch': epoch,
-                    }, 'result/best_model.pth'
-                )
+                torch.save({'model': model.state_dict(),
+                            'optimizer': optimizer.state_dict(),
+                            'scheduler': scheduler.state_dict(),
+                            'epoch': epoch,
+                            }, 'result/best_model.pth')
             else:
                 wait += 1
                 if wait >= patience:
                     print(f'Early stopping at epoch {epoch}')
+
+                    # Log the results
+                    save_results(
+                        run=run,
+                        window=window,
+                        metrics=best_metrics,
+                        csv_path=csv_path
+                    )
                     break
     return sum(times) / len(times)
 
@@ -144,8 +156,8 @@ def eval(
         threshold: float
 ) -> Tuple[float]:
     model.eval()
-    labels: List = []
     probs: List = []
+    labels: List = []
 
     with torch.no_grad():
         for batch in data_loader:
@@ -179,7 +191,6 @@ def eval(
 
     type_1_error  = fp / (fp + tn) if (fp + tn) else 0.0
     type_2_error = fn / (tp + fn) if (tp + fn) else 0.0
-
     return (
         acc, auc, bac,
         tn, fp, fn, tp,

@@ -15,11 +15,9 @@ class ANN(nn.Module):
     ) -> None:
         super(ANN, self).__init__()
         # Classifier
-        self.fc = Classifier(
-            input_size=window_size * num_variables,
-            hidden_size=hidden_size,
-            num_classes=num_classes
-        )
+        self.fc = Classifier(input_size=window_size * num_variables,
+                             hidden_size=hidden_size,
+                             num_classes=num_classes)
 
     def forward(self, x: List[Tensor]) -> Tensor:
         flatten: list = []

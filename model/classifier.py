@@ -17,14 +17,11 @@ class Classifier(nn.Module):
     ) -> None:
         super(Classifier, self).__init__()
         # Sequential layer
-        self.layer = nn.Sequential(
-            nn.Linear(input_size, hidden_size, bias),
-            self.normalize(hidden_size),
-            self.activation(),
-            nn.Dropout(dropout),
-            nn.Linear(hidden_size, num_classes, bias)
-        )
-
+        self.layer = nn.Sequential(nn.Linear(input_size, hidden_size, bias),
+                                   self.normalize(hidden_size),
+                                   self.activation(),
+                                   nn.Dropout(dropout),
+                                   nn.Linear(hidden_size, num_classes, bias))
         # Initialize weights
         self._init_weights()
 

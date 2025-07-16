@@ -9,7 +9,7 @@ bal_valid: false
 bal_test: false
 
 # Scaler settings (standard, robust, minmax)
-scaler: 'robust'
+scaler: 'standard'
 
 # DataLoader settings
 batch_size: 32

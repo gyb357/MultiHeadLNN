@@ -14,8 +14,9 @@ from dataset import (
 )
 from typing import List
 from torch.utils.data import TensorDataset, DataLoader
-from train import fit, eval
+from train.train import fit, eval
 from model.utils import get_parameters
+from train.utils import save_results
 
 
 # Get configurations (pyyaml config)
@@ -135,6 +136,9 @@ if __name__ == '__main__':
             ).to(device)
             print(f"Model parameters: {get_parameters(model)}")
 
+            # CSV path for saving results
+            csv_path = f"result/{MODEL.__name__}_results_{SCALER.__class__.__name__}_{THRESHOLD}"
+
             # Train the model
             train_time = fit(
                 model=model,
@@ -144,7 +148,10 @@ if __name__ == '__main__':
                 lr=LR,
                 epochs=EPOCHS,
                 patience=PATIENCE,
-                threshold=THRESHOLD
+                threshold=THRESHOLD,
+                run=run,
+                window=window,
+                csv_path=csv_path + "_valid.csv"
             )
 
             # Evaluate the model
@@ -156,45 +163,21 @@ if __name__ == '__main__':
                 device=device,
                 threshold=THRESHOLD
             )
-            print(
-                f"[Window {window}] "
-                f"Test Accuracy = {metrics[0]:.4f}, "
-                f"AUC = {metrics[1]:.4f}, "
-                f"BAC = {metrics[2]:.4f}"
+            print(f"[Window {window}] "
+                  f"Test Accuracy = {metrics[0]:.4f}, "
+                  f"AUC = {metrics[1]:.4f}, "
+                  f"BAC = {metrics[2]:.4f}"
             )
 
-            # Save results to csv
-            results = pd.DataFrame({
-                'run': [run],
-                'window': [window],
-                'tp': [metrics[6]],
-                'tn': [metrics[3]],
-                'fp': [metrics[4]],
-                'fn': [metrics[5]],
-                'accuracy': [metrics[0]],
-                'auc': [metrics[1]],
-                'bac': [metrics[2]],
-                'micro_f1': [metrics[7]],
-                'macro_f1': [metrics[8]],
-                'type_1_error': [metrics[9]],
-                'type_2_error': [metrics[10]],
-                'rec_bankruptcy': [metrics[11]],
-                'pr_bankruptcy': [metrics[12]],
-                'rec_healthy': [metrics[13]],
-                'pr_healthy': [metrics[14]],
-                'train_time': [train_time],
-            })
-            out_path = f"result/{MODEL.__name__}_results_{SCALER.__class__.__name__}_{THRESHOLD}.csv"
+            # Save results
             if not os.path.exists('result'):
-                os.makedirs('result')
+                os.makedirs('result', exist_ok=True)
 
-            write_header = (run == 1 and window == WINDOW_START)
-            results.to_csv(
-                out_path,
-                mode='a',
-                index=False,
-                header=write_header,
-                float_format='%.4f',
-                lineterminator='\n'
+            save_results(
+                run=run,
+                window=window,
+                metrics=metrics,
+                csv_path=csv_path + "_test.csv"
             )
+            print(f"Results saved to {csv_path}")
 

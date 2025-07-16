@@ -42,7 +42,7 @@ Continuous-time recurrent network with liquid time constants. Uses the [ncps](ht
 
 ### 2. Closed-form Continuous-time Networks (CfC)
 
-Efficient continuous-time networks with closed-form solutions. Uses the [ncps](https://github.com/mlech26l/ncps) library with tanh activation.
+Efficient continuous-time networks with closed-form solutions. Uses the [ncps](https://github.com/mlech26l/ncps) library with lecun_tanh activation.
 
 * **Paper:** [https://arxiv.org/pdf/2106.13898](https://arxiv.org/pdf/2106.13898)
 

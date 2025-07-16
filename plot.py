@@ -20,8 +20,7 @@ COLUMNS = [
     'micro_f1', 'macro_f1',
     'type_1_error', 'type_2_error',
     'rec_bankruptcy', 'pr_bankruptcy',
-    'rec_healthy', 'pr_healthy',
-    'train_time'
+    'rec_healthy', 'pr_healthy'
 ]
 METRICS = COLUMNS[2:]
 
@@ -73,7 +72,7 @@ nrows = math.ceil(len(METRICS) / ncols)
 fig, axes = plt.subplots(
     nrows=nrows,
     ncols=ncols,
-    figsize=(6*ncols, 4*nrows),
+    figsize=(6*ncols, 6*nrows),
     constrained_layout=False
 )
 fig.suptitle(f'Model Comparison on Window={WINDOW} Across Metrics', fontsize=14)

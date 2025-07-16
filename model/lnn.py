@@ -17,20 +17,16 @@ class MultiHeadLTC(nn.Module):
         super(MultiHeadLTC, self).__init__()
         # Liquid time-constant networks (LTC)
         self.cell = nn.ModuleList([
-            LTC(
-                input_size=1,
+            LTC(input_size=1,
                 units=window_size,
-                batch_first=True
-            )
+                batch_first=True)
             for _ in range(num_variables)
         ])
 
         # Classifier
-        self.fc = Classifier(
-            input_size=window_size * num_variables,
-            hidden_size=hidden_size,
-            num_classes=num_classes
-        )
+        self.fc = Classifier(input_size=window_size * num_variables,
+                             hidden_size=hidden_size,
+                             num_classes=num_classes)
 
     def forward(self, x: List[Tensor]) -> Tensor:
         return forward(x, self.cell, self.fc)
@@ -47,8 +43,7 @@ class MultiHeadCfC(nn.Module):
         super(MultiHeadCfC, self).__init__()
         # Closed-form continuous-time neural networks (CfC)
         self.cell = nn.ModuleList([
-            CfC(
-                input_size=1,
+            CfC(input_size=1,
                 units=window_size,
                 batch_first=True
             )
@@ -56,11 +51,9 @@ class MultiHeadCfC(nn.Module):
         ])
 
         # Classifier
-        self.fc = Classifier(
-            input_size=window_size * num_variables,
-            hidden_size=hidden_size,
-            num_classes=num_classes
-        )
+        self.fc = Classifier(input_size=window_size * num_variables,
+                             hidden_size=hidden_size,
+                             num_classes=num_classes)
 
     def forward(self, x: List[Tensor]) -> Tensor:
         return forward(x, self.cell, self.fc)
