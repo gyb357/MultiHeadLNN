@@ -20,7 +20,8 @@ COLUMNS = [
     'micro_f1', 'macro_f1',
     'type_1_error', 'type_2_error',
     'rec_bankruptcy', 'pr_bankruptcy',
-    'rec_healthy', 'pr_healthy'
+    'rec_healthy', 'pr_healthy',
+    'train_time'
 ]
 METRICS = COLUMNS[2:]
 
