@@ -7,7 +7,7 @@ with open('config/configs.yaml', 'r') as file:
     config = safe_load(file)
 
 
-def save_results(run: int, window: int, metrics: List[float], csv_path: str) -> None:
+def save_results(run: int, window: int, metrics: List[float], train_time: float, csv_path: str) -> None:
     results = pd.DataFrame({
         'run': [run],
         'window': [window],
@@ -26,6 +26,7 @@ def save_results(run: int, window: int, metrics: List[float], csv_path: str) -> 
         'pr_bankruptcy': [metrics[12]],
         'rec_healthy': [metrics[13]],
         'pr_healthy': [metrics[14]],
+        'train_time': [train_time]
     })
     results.to_csv(
         csv_path,

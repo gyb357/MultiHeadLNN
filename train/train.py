@@ -143,7 +143,8 @@ def fit(
                         run=run,
                         window=window,
                         metrics=best_metrics,
-                        csv_path=csv_path
+                        train_time=sum(times) / len(times),
+                        csv_path=csv_path,
                     )
                     break
     return sum(times) / len(times)

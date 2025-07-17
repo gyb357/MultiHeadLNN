@@ -177,7 +177,8 @@ if __name__ == '__main__':
                 run=run,
                 window=window,
                 metrics=metrics,
-                csv_path=csv_path + "_test.csv"
+                train_time=train_time,
+                csv_path=csv_path + "_test.csv",
             )
             print(f"Results saved to {csv_path}")
 
