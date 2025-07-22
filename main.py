@@ -5,7 +5,7 @@ from yaml import safe_load
 from sklearn.preprocessing import StandardScaler, RobustScaler, MinMaxScaler
 from model.ann import ANN
 from model.lnn import MultiHeadLTC, MultiHeadCfC
-from model.rnn import MultiHeadLSTM, MultiHeadGRU
+from model.rnn import MultiHeadRNN, MultiHeadLSTM, MultiHeadGRU
 from dataset import (
     undersample_dataset,
     processing,
@@ -50,6 +50,7 @@ _models = {
     'ann': ANN,
     'ltc': MultiHeadLTC,
     'cfc': MultiHeadCfC,
+    'rnn': MultiHeadRNN,
     'lstm': MultiHeadLSTM,
     'gru': MultiHeadGRU
 }
