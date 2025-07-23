@@ -47,10 +47,29 @@ df = pd.concat(df, ignore_index=True)
 df = df[df['window'] == WINDOW]
 df[METRICS] = df[METRICS].apply(pd.to_numeric, errors='coerce')
 
-# Get unique models
-models = df['model'].unique().tolist()
-n_models = len(models)
+# Sort
+scaler_prio = ['StandardScaler', 'RobustScaler']
+arch_prio   = ['ANN', 'RNN', 'LSTM', 'GRU']
 
+# Get unique models
+unique_models = df['model'].unique().tolist()
+models = sorted(
+    unique_models,
+    key=lambda m: (
+        # Scaler
+        scaler_prio.index(m.split('_results_')[1].split('_')[0])
+            if '_results_' in m
+               and m.split('_results_')[1].split('_')[0] in scaler_prio
+            else len(scaler_prio),
+        # Model name
+        next(
+            (arch_prio.index(a) for a in arch_prio if a in m.upper()),
+            len(arch_prio)
+        )
+    )
+)
+
+n_models = len(models)
 
 # Generate pastel colors for each model
 start_hex = '#FCB9AA'
