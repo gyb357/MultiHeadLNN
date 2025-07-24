@@ -30,6 +30,11 @@ This repository implements a multi-head architecture for bankruptcy prediction o
 
 <img src="assets/architecture.png" alt="Multi-head architecture schematic" />
 
+<div align="center">
+   <img src="assets/architecture.png" alt="Multi-head architecture schematic" />
+</div>
+
+
 The architecture employs a multi-head design where each financial variable is processed through its own dedicated network branch, with outputs subsequently combined for final classification.
 
 > **Note:** Papers are [here](https://www.mdpi.com/1999-5903/16/3/79).
@@ -46,11 +51,16 @@ Efficient continuous-time networks with closed-form solutions. Uses the [ncps](h
 
 * **Paper:** [https://arxiv.org/pdf/2106.13898](https://arxiv.org/pdf/2106.13898)
 
-### 3. Long Short-Term Memory (LSTM)
+
+### 3. Recurrent Neural Network (RNN)
+
+Recurrent network capturing sequential dependencies via hidden‑state recurrence.
+
+### 4. Long Short-Term Memory (LSTM)
 
 Traditional recurrent network with memory cells.
 
-### 4. Gated Recurrent Unit (GRU)
+### 5. Gated Recurrent Unit (GRU)
 
 Simplified recurrent network with gating mechanisms.
 
@@ -62,13 +72,14 @@ Simplified recurrent network with gating mechanisms.
 
 ## Model Parameters
 
-| Model Type | Window Size |    Total Parameters    |
-| :--------: | :---------: | :--------------------: |
-|     LTC    |   3, 4, 5   |   1,170; 1,836; 2,646  |
-|     CfC    |   3, 4, 5   | 39,384; 50,976; 62,568 |
-|    LSTM    |   3, 4, 5   |   1,296; 2,016; 2,880  |
-|     GRU    |   3, 4, 5   |    972; 1,512; 2,160   |
-| Classifier |   3, 4, 5   |   3,778; 4,930; 6,082  |
+| Model Type | Window Size |     Total Parameters     |
+| :--------: | :---------: | :----------------------: |
+|     LTC    |   3, 4, 5   |   1,170 / 1,836 / 2,646  |
+|     CfC    |   3, 4, 5   | 39,384 / 50,976 / 62,568 |
+|     RNN    |   3, 4, 5   |      324 / 504 / 720     |
+|    LSTM    |   3, 4, 5   |   1,296 / 2,016 / 2,880  |
+|     GRU    |   3, 4, 5   |    972 / 1,512 / 2,160   |
+| Classifier |   3, 4, 5   |   3,778 / 4,930 / 6,082  |
 
 
 </div>
