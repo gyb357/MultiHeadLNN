@@ -28,8 +28,6 @@ This repository implements a multi-head architecture for bankruptcy prediction o
 
 ## Multi-Head Architecture
 
-<img src="assets/architecture.png" alt="Multi-head architecture schematic" />
-
 <div align="center">
    <img src="assets/architecture.png" alt="Multi-head architecture schematic" />
 </div>
