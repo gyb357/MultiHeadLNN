@@ -51,7 +51,7 @@ df[METRICS] = df[METRICS].apply(pd.to_numeric, errors='coerce')
 
 # Sort
 scaler_prio = ['StandardScaler', 'RobustScaler']
-arch_prio   = ['ANN', 'RNN', 'LSTM', 'GRU']
+arch_prio   = ['ANN', 'RNN', 'LSTM', 'GRU', 'CfC']
 
 # Get unique models
 unique_models = df['model'].unique().tolist()
