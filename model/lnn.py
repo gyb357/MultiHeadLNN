@@ -19,7 +19,8 @@ class MultiHeadLTC(nn.Module):
         self.cell = nn.ModuleList([
             LTC(input_size=1,
                 units=window_size,
-                batch_first=True)
+                batch_first=True,
+                ode_unfolds=1)
             for _ in range(num_variables)
         ])
 

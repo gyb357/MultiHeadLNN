@@ -14,6 +14,8 @@ from sklearn.metrics import (
     roc_auc_score,
     balanced_accuracy_score,
     confusion_matrix,
+    recall_score,
+    precision_score,
     f1_score
 )
 
@@ -157,41 +159,44 @@ def eval(
         threshold: float
 ) -> Tuple[float]:
     model.eval()
-    probs: List = []
-    labels: List = []
+    probs: list = []
+    labels: list = []
 
     with torch.no_grad():
         for batch in data_loader:
             *x, y = batch
-            x, y = [xi.to(device) for xi in x], y.to(device)
+            x = [xi.to(device) for xi in x]
+            y = y.to(device)
 
             # Forward pass
-            outputs = model(x)
+            logits = model(x)
 
             # Compute probabilities
-            prob = F.softmax(outputs, dim=1)[:, 1]
-            probs.extend(prob.cpu().numpy())
+            prob1 = F.softmax(logits, dim=1)[:, 1]
+            probs.extend(prob1.cpu().numpy())
             labels.extend(y.cpu().numpy())
 
     # Convert to numpy arrays
-    preds = [1 if p > threshold else 0 for p in probs]
+    preds = [1 if p >= threshold else 0 for p in probs]
 
     # Compute metrics
     acc = accuracy_score(labels, preds)
     auc = roc_auc_score(labels, probs)
     bac = balanced_accuracy_score(labels, preds)
-    tn, fp, fn, tp = confusion_matrix(labels, preds).ravel()
 
-    rec_bankruptcy = tp / (tp + fn) if (tp + fn) else 0.0
-    pr_bankruptcy  = tp / (tp + fp) if (tp + fp) else 0.0
-    rec_healthy    = tn / (tn + fp) if (tn + fp) else 0.0
-    pr_healthy     = tn / (tn + fn) if (tn + fn) else 0.0
+    tn, fp, fn, tp = confusion_matrix(labels, preds, labels=[0, 1]).ravel()
 
-    micro_f1 = f1_score(labels, preds, average='micro')
-    macro_f1 = f1_score(labels, preds, average='macro')
+    rec_bankruptcy = recall_score(labels, preds, pos_label=1, zero_division=0)
+    pr_bankruptcy  = precision_score(labels, preds, pos_label=1, zero_division=0)
+    rec_healthy = recall_score(labels, preds, pos_label=0, zero_division=0)
+    pr_healthy = precision_score(labels, preds, pos_label=0, zero_division=0)
 
-    type_1_error  = fp / (fp + tn) if (fp + tn) else 0.0
-    type_2_error = fn / (tp + fn) if (tp + fn) else 0.0
+    micro_f1 = f1_score(labels, preds, average='micro', zero_division=0)
+    macro_f1 = f1_score(labels, preds, average='macro', zero_division=0)
+    
+    type_1_error = 1.0 - rec_healthy    # fp / (fp + tn)
+    type_2_error = 1.0 - rec_bankruptcy # fn / (tp + fn)
+
     return (
         acc, auc, bac,
         tn, fp, fn, tp,

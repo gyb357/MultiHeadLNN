@@ -138,7 +138,7 @@ if __name__ == '__main__':
             print(f"Model parameters: {get_parameters(model)}")
 
             # CSV path for saving results
-            csv_path = f"result/{MODEL.__name__}_results_{SCALER.__class__.__name__}_{THRESHOLD}"
+            csv_path = f"result/{MODEL.__name__}_{SCALER.__class__.__name__}_{THRESHOLD}"
 
             # Train the model
             train_time = fit(

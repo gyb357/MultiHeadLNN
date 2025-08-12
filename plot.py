@@ -37,6 +37,8 @@ for file in csv_files:
     df_tmp = pd.read_csv(file, names=COLUMNS, header=0)
     # Set model name from file name
     df_tmp['model'] = file.stem
+    # Print number of rows
+    print(f"{file.stem}: {len(df_tmp)} rows")
     # append to list
     df.append(df_tmp)
 
@@ -68,6 +70,28 @@ models = sorted(
         )
     )
 )
+
+# Best-by-median summary (print before plotting)
+print(f"\n[Window={WINDOW}] Best model(s) by median for each metric\n" + "-"*70)
+for metric in METRICS:
+    # Get median values for each model
+    medians = (
+        df[df['model'].isin(models)]
+        .groupby('model')[metric]
+        .median()
+        .dropna()
+    )
+    if medians.empty:
+        print(f"{metric.upper():<15} | No data available")
+        continue
+
+    best_val = medians.max()
+    best_models = medians[medians == best_val].index.tolist()
+    best_models_str = ", ".join(best_models)
+
+    # Print the best model(s) for the metric
+    print(f"{metric.upper():<15} | best median = {best_val:.3f} | model(s): {best_models_str}")
+print("-"*70 + "\n")
 
 n_models = len(models)
 
