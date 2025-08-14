@@ -111,13 +111,13 @@ def fit(
 
             # Validation
             valid_metrics = eval(model, valid_loader, device, threshold)
-            valid_auc = valid_metrics[1]
+            valid_auc = valid_metrics[3] # PR AUC
 
             # Log the results
             task_auc = valid_auc
             progress.update(
                 task,
-                description=f"Epoch {epoch}/{epochs} • AUC: {task_auc:.4f}"
+                description=f"Epoch {epoch}/{epochs} • PR-AUC: {task_auc:.4f}"
             )
 
             # Step the scheduler
