@@ -13,6 +13,9 @@ from sklearn.metrics import (
     accuracy_score,
     roc_auc_score,
     balanced_accuracy_score,
+    average_precision_score,
+    precision_recall_curve,
+    auc,
     confusion_matrix,
     recall_score,
     precision_score,
@@ -181,8 +184,12 @@ def eval(
 
     # Compute metrics
     acc = accuracy_score(labels, preds)
-    auc = roc_auc_score(labels, probs)
+    roc_auc = roc_auc_score(labels, probs)
     bac = balanced_accuracy_score(labels, preds)
+
+    pr_auc1 = average_precision_score(labels, probs)
+    precision, recall, _ = precision_recall_curve(labels, probs)
+    pr_auc2 = auc(recall, precision)
 
     tn, fp, fn, tp = confusion_matrix(labels, preds, labels=[0, 1]).ravel()
 
@@ -198,7 +205,8 @@ def eval(
     type_2_error = 1.0 - rec_bankruptcy # fn / (tp + fn)
 
     return (
-        acc, auc, bac,
+        acc, roc_auc, bac,
+        pr_auc1, pr_auc2,
         tn, fp, fn, tp,
         micro_f1, macro_f1,
         type_1_error, type_2_error,
