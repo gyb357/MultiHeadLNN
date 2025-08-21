@@ -150,6 +150,6 @@ python main.py
 ### Results
 
 * Model checkpoints: `result/best_model.pth`
-* Experimental results: `result/{ModelName}_results_{ScalerName}_{Threshold}.csv`
+* Experimental results: `result/{ModelName}_{ScalerName}_{Threshold}_{'valid' or 'test'}.csv`
 * To generate plots: `python plot.py`
 
