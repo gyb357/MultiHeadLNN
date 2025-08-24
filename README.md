@@ -120,7 +120,6 @@ pip install -r requirements.txt
 
 ```bash
 https://github.com/sowide/multi-head_LSTM_for_bankruptcy-prediction
-https://github.com/sowide/bankruptcy_dataset
 ```
 
 > **Note:** The dataset is under a CC-BY-4.0 license. Please refer to each repository's README.
