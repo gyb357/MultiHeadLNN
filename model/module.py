@@ -4,8 +4,8 @@ from torch import Tensor
 
 
 class Classifier(nn.Module):
-    normalize: Type[nn.Module] = nn.LayerNorm # nn.BatchNorm1d,
-    activation: Type[nn.Module] = nn.Sigmoid  # nn.Tanh, nn.ReLU, nn.GeLU, ...
+    normalize: Type[nn.Module] = nn.LayerNorm # nn.LayerNorm, nn.BatchNorm1d
+    activation: Type[nn.Module] = nn.Tanh     # nn.Tanh, nn.ReLU, nn.GeLU, ...
 
     def __init__(
             self,

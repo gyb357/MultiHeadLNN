@@ -6,9 +6,9 @@ import os
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
 from torch import device
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 from rich.progress import Progress, TextColumn, BarColumn, TimeElapsedColumn
-from train.utils import save_results
+from train.utils import probability, save_results
 from sklearn.metrics import (
     accuracy_score,
     roc_auc_score,
@@ -52,11 +52,14 @@ def fit(
     optimizer = optim.AdamW(model.parameters(), lr=lr)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='max', factor=0.5, patience=patience // 2)
 
-    # Variables
+    # Telemetry for progress bar
+    task_loss: float = 0.0
     task_auc: float = 0.0
+    # Early stopping variables
     best_auc: float = 0.0
     best_metrics: Tuple[float] = ()
     wait: int = 0
+    # Training time tracking
     times: List[float] = []
 
     # Progress bar setup
@@ -67,7 +70,7 @@ def fit(
         TimeElapsedColumn(),
         refresh_per_second=10,
     ) as progress:
-        task = progress.add_task(f"Epoch 1/{epochs} • AUC: 0.0000", total=len(train_loader))
+        task = progress.add_task(f"Epoch 1/{epochs} / Loss: 0.0000 / PR-AUC: 0.0000", total=len(train_loader))
 
         for epoch in range(1, epochs + 1):
             # Reset progress bar for each epoch
@@ -75,7 +78,7 @@ def fit(
                 task,
                 total=len(train_loader),
                 completed=0,
-                description=f"Epoch {epoch}/{epochs} • AUC: {task_auc:.4f}"
+                description=f"Epoch {epoch}/{epochs} / Loss: {task_loss:.4f} / PR-AUC: {task_auc:.4f}"
             )
 
             model.train()
@@ -111,13 +114,14 @@ def fit(
 
             # Validation
             valid_metrics = eval(model, valid_loader, device, threshold)
-            valid_auc = valid_metrics[3] # PR AUC
+            valid_auc = valid_metrics[3] # PR-AUC (average_precision_score)
 
             # Log the results
+            task_loss = train_loss
             task_auc = valid_auc
             progress.update(
                 task,
-                description=f"Epoch {epoch}/{epochs} • PR-AUC: {task_auc:.4f}"
+                description=f"Epoch {epoch}/{epochs} / Loss: {task_loss:.4f} / PR-AUC: {task_auc:.4f}"
             )
 
             # Step the scheduler
@@ -143,7 +147,7 @@ def fit(
                 if wait >= patience:
                     print(f'Early stopping at epoch {epoch}')
 
-                    # Log the results
+                    # Save results
                     save_results(
                         run=run,
                         window=window,
@@ -159,28 +163,37 @@ def eval(
         model: nn.Module,
         data_loader: DataLoader,
         device: device,
-        threshold: float
+        threshold: float,
+        cik_status: List[Tuple[int, int]] = None
 ) -> Tuple[float]:
     model.eval()
-    probs: list = []
-    labels: list = []
+
+    probs: List[float] = []
+    labels: List[int] = []
+
+    company_predictions: Dict[int, Dict[str, float]] = {}
+    num_processed: int = 0
 
     with torch.no_grad():
         for batch in data_loader:
             *x, y = batch
-            x = [xi.to(device) for xi in x]
-            y = y.to(device)
+            x, y = [xi.to(device) for xi in x], y.to(device)
 
-            # Forward pass
             logits = model(x)
 
             # Compute probabilities
-            prob1 = F.softmax(logits, dim=1)[:, 1]
-            probs.extend(prob1.cpu().numpy())
-            labels.extend(y.cpu().numpy())
+            prob = F.softmax(logits, dim=1)[:, 1]
+            batch_probs = prob.detach().cpu().numpy()
+            batch_labels = y.detach().cpu().numpy()
+            batch_preds = probability(batch_probs, threshold)
+
+            # 
+            probs.extend(batch_probs.tolist())
+            labels.extend(batch_labels.tolist())
+    
 
     # Convert to numpy arrays
-    preds = [1 if p >= threshold else 0 for p in probs]
+    preds = probability(probs, threshold)
 
     # Compute metrics
     acc = accuracy_score(labels, preds)
