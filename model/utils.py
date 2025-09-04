@@ -1,42 +1,46 @@
 import torch.nn as nn
-from typing import Dict
 from ncps.torch import LTC, CfC
 
 
-def get_cell(
-        type: str,
+def get_rnn_layer(
+        rnn_type: str,
         input_size: int,
-        window_size: int,
+        hidden_size: int,
         batch_first: bool = True
 ) -> nn.Module:
-    type: str = type.lower()
-    types: Dict[str, nn.Module] = {'rnn': nn.RNN,
-                                   'lstm': nn.LSTM,
-                                   'gru': nn.GRU,
-                                   'ltc': LTC,
-                                   'cfc': CfC}
+    rnn_type = rnn_type.lower()
+    types = {
+        'rnn': nn.RNN,
+        'lstm': nn.LSTM,
+        'gru': nn.GRU,
+        'ltc': LTC,
+        'cfc': CfC
+    }
+
+    if rnn_type not in types:
+        raise ValueError(f"Unsupported rnn type: {rnn_type}. Supported types are: {list(types.keys())}")
     
-    # Type check
-    if type not in types:
-        raise ValueError(f"Unsupported cell type: {type}. Supported types are: {list(types.keys())}")
+    # Standard RNNs
+    if rnn_type in ['rnn', 'lstm', 'gru']:
+        rnn = types[rnn_type](
+            input_size=input_size,
+            hidden_size=hidden_size,
+            batch_first=batch_first
+        )
+    # Liquid Time Constant Neural Network (LTC) & Closed-form Continuous-time Neural Network (CfC)
+    elif rnn_type in ['ltc', 'cfc']:
+        rnn = types[rnn_type](
+            input_size=input_size,
+            units=hidden_size,
+            batch_first=batch_first
+        )
+    return rnn
 
-    # Standard RNN cells
-    if type in ['rnn', 'lstm', 'gru']:
-        cell = types[type](input_size=input_size,
-                           hidden_size=window_size,
-                           batch_first=batch_first)
-    # NCPS cells
-    elif type in ['ltc', 'cfc']:
-        cell = types[type](input_size=input_size,
-                           units=window_size,
-                           batch_first=batch_first)
-    return cell
 
-
-def init_weights(module: nn.Module) -> None:
-    # Standard RNN weight initialization
-    if isinstance(module, (nn.RNN, nn.LSTM, nn.GRU)):
-        for name, param in module.named_parameters():
+def init_weights(model: nn.Module) -> None:
+    # Standard RNNs initialization
+    if isinstance(model, (nn.RNN, nn.LSTM, nn.GRU)):
+        for name, param in model.named_parameters():
             if 'weight_ih' in name:
                 nn.init.xavier_uniform_(param)
             elif 'weight_hh' in name:
@@ -45,6 +49,6 @@ def init_weights(module: nn.Module) -> None:
                 nn.init.zeros_(param)
 
 
-def get_parameters(module: nn.Module) -> int:
-    return sum(p.numel() for p in module.parameters() if p.requires_grad)
+def get_parameters(model: nn.Module) -> int:
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
 

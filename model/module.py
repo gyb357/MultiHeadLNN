@@ -4,8 +4,8 @@ from torch import Tensor
 
 
 class Classifier(nn.Module):
-    normalize: Type[nn.Module] = nn.LayerNorm # nn.LayerNorm, nn.BatchNorm1d
-    activation: Type[nn.Module] = nn.Tanh     # nn.Tanh, nn.ReLU, nn.GeLU, ...
+    normalize: Type[nn.Module] = nn.LayerNorm  # nn.BatchNorm1d, ...
+    activation: Type[nn.Module] = nn.Sigmoid   # nn.ReLU, nn.GELU, nn.Tanh, ...
 
     def __init__(
             self,
@@ -17,11 +17,14 @@ class Classifier(nn.Module):
     ) -> None:
         super(Classifier, self).__init__()
         # Sequential layer
-        self.layer = nn.Sequential(nn.Linear(input_size, hidden_size, bias),
-                                   self.normalize(hidden_size),
-                                   self.activation(),
-                                   nn.Dropout(dropout),
-                                   nn.Linear(hidden_size, num_classes, bias))
+        self.layer = nn.Sequential(
+            nn.Linear(input_size, hidden_size, bias),
+            self.normalize(hidden_size),
+            self.activation(),
+            nn.Dropout(dropout),
+            nn.Linear(hidden_size, num_classes, bias),
+        )
+
         # Initialize weights
         self._init_weights()
 
@@ -29,10 +32,13 @@ class Classifier(nn.Module):
         for m in self.layer:
             if isinstance(m, nn.Linear):
                 nn.init.xavier_uniform_(m.weight)
-                nn.init.zeros_(m.bias)
+                if m.bias is not None:  # bias=False 가드
+                    nn.init.zeros_(m.bias)
             elif isinstance(m, (nn.BatchNorm1d, nn.LayerNorm)):
-                nn.init.ones_(m.weight)
-                nn.init.zeros_(m.bias)
+                if getattr(m, "weight", None) is not None:
+                    nn.init.ones_(m.weight)
+                if getattr(m, "bias", None) is not None:
+                    nn.init.zeros_(m.bias)
 
     def forward(self, x: Tensor) -> Tensor:
         return self.layer(x)
