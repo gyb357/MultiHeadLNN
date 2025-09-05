@@ -1,4 +1,3 @@
-
 import pandas as pd
 import torch
 from yaml import safe_load
@@ -91,7 +90,7 @@ if __name__ == '__main__':
 
             #
             expected_test_samples = len(y_test)
-            actual_dataset_samples = num_samples
+            actual_dataset_samples = len(cik_status_df)
             print(f"Expected test samples: {expected_test_samples}, Actual dataset samples: {actual_dataset_samples}")
 
             if expected_test_samples != actual_dataset_samples:

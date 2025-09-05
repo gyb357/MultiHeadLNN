@@ -301,7 +301,7 @@ def eval(
                 'pred_1_count': 'sum',
                 'total_predictions': 'sum'
             }
-            df_final = df_concat.groupby('cik', as_index=False).agg(aggregation_rules)
+            df_final = df_concat.groupby('cik', as_index=False, sort=False).agg(aggregation_rules)
             df_final.to_csv(csv_path, index=False)
         except Exception as e:
             print(f"[Error] while reading or writing CSV: {e}")
