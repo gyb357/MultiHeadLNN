@@ -13,7 +13,7 @@ from dataset import (
 from typing import List
 from torch.utils.data import DataLoader
 from model.utils import get_parameters
-from train import fit, eval
+from train.train import fit, eval
 from train.utils import save_results
 
 
@@ -142,9 +142,7 @@ if __name__ == '__main__':
                 rnn_type=TYPE
             ).to(device)
             #
-            print(f"RNN parameters: {get_parameters(model.rnn)}",
-                  f"Classifier parameters: {get_parameters(model.fc)}",
-                  f"Total parameters: {get_parameters(model)}")
+            print(f"Parameters: {get_parameters(model)}")
             
             #
             csv_path = f"result/{MODEL.__name__}_{TYPE.upper()}_{SCALER.__class__.__name__}_{THRESHOLD}"
