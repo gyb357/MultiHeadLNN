@@ -1,20 +1,23 @@
 import pandas as pd
 import numpy as np
+import torch
+from typing import Tuple, List
+from torch.utils.data import TensorDataset
 
 
-def extract_labels(df: pd.DataFrame, window: int):
+def extract_labels(df: pd.DataFrame, window: int) -> np.ndarray:
     df = df.values.reshape(len(df) // window, window)
     return df[:, 1]
 
 
-def extract_variable_train(df: pd.DataFrame, name: str, window: int):
+def extract_variable_train(df: pd.DataFrame, name: str, window: int) -> np.ndarray:
     x = df[name]
     x = pd.DataFrame(x)
     x = x[x.columns[::2]]
     return x[name].values.reshape(len(df) // window, window, 1)
 
 
-def processing(df: pd.DataFrame):
+def processing(df: pd.DataFrame) -> Tuple[pd.DataFrame, pd.Series]:
     y = df.pop('status')
     df.pop('status_label')
     df.pop('cik')
@@ -24,7 +27,7 @@ def processing(df: pd.DataFrame):
     return df, y
 
 
-def shuffle_group(df: pd.DataFrame, k: int):
+def shuffle_group(df: pd.DataFrame, k: int) -> pd.DataFrame:
     len_group = k
 
     index_list = np.array(df.index)
@@ -46,4 +49,9 @@ def undersample_dataset(df: pd.DataFrame, window: int) -> pd.DataFrame:
     to_cut = len(df[df.status_label == 'alive']) - len(df[df.status_label == "failed"])
     df = postproc.drop(index=postproc.index[:to_cut])
     return df
+
+
+def to_tensor_dataset(x_list: List[float], y: float, window: int) -> TensorDataset:
+    return TensorDataset(*[torch.from_numpy(arr).float() for arr in x_list],
+                         torch.from_numpy(extract_labels(y, window)).long())
 

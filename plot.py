@@ -13,14 +13,16 @@ with open('config/configs.yaml', 'r') as file:
 
 # Constants
 WINDOW = config['window']
-COLUMNS = ['run', 'window',
-           'tp', 'tn', 'fp', 'fn',
-           'acc', 'roc_auc', 'bac',
-           'pr_auc1', 'pr_auc2',
-           'micro_f1', 'macro_f1',
-           'type_1_error', 'type_2_error',
-           'rec_bankruptcy', 'pr_bankruptcy', 'rec_healthy', 'pr_healthy',
-           'train_time']
+COLUMNS = [
+  'run', 'window',
+  'tp', 'tn', 'fp', 'fn',
+  'acc', 'roc_auc', 'bac',
+  'pr_auc1', 'pr_auc2',
+  'micro_f1', 'macro_f1',
+  'type_1_error', 'type_2_error',
+  'rec_bankruptcy', 'pr_bankruptcy', 'rec_healthy', 'pr_healthy',
+  'train_time'
+]
 METRICS = COLUMNS[2:]
 
 
