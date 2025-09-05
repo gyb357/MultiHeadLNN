@@ -87,14 +87,6 @@ if __name__ == '__main__':
             x_train, y_train = processing(train_df)
             x_valid, y_valid = processing(valid_df)
             x_test, y_test = processing(test_df)
-
-            #
-            expected_test_samples = len(y_test)
-            actual_dataset_samples = len(cik_status_df)
-            print(f"Expected test samples: {expected_test_samples}, Actual dataset samples: {actual_dataset_samples}")
-
-            if expected_test_samples != actual_dataset_samples:
-                raise ValueError("Mismatch between expected test samples and actual dataset samples")
             
             #
             variables = x_train.columns.tolist()
@@ -121,6 +113,14 @@ if __name__ == '__main__':
             train_dataset = to_tensor_dataset(x_train_list, y_train, window)
             valid_dataset = to_tensor_dataset(x_valid_list, y_valid, window)
             test_dataset = to_tensor_dataset(x_test_list, y_test, window)
+
+            #
+            expected_test_samples = len(test_dataset)
+            actual_dataset_samples = len(cik_status_df)
+            print(f"Expected test samples: {expected_test_samples}, Actual dataset samples: {actual_dataset_samples}")
+
+            if expected_test_samples != actual_dataset_samples:
+                raise ValueError("Mismatch between expected test samples and actual dataset samples")
 
             #
             print(f"Dataset sizes - Train: {len(train_dataset)}, Valid: {len(valid_dataset)}, Test: {len(test_dataset)}")
